@@ -20,8 +20,8 @@ FROM products
 GROUP BY productline
 ORDER BY SUM(quantityinstock) DESC
 
-#(Haciendo un paréntesis y para demostrar el uso de JOIN, en caso de que Productline no fuere clave foránea en products, deberíamos haber hecho las siguientes consultas para obtener el mismo resultado
-#que en las queries de arriba.
+Haciendo un paréntesis y para demostrar el uso de JOIN, en caso de que Productline no fuere clave foránea en products, deberíamos haber hecho las siguientes consultas para obtener el mismo resultado
+que en las queries de arriba.
   
 SELECT pl.productline AS ProductLine, COUNT(pr.productCode) AS Model_Qtty
 FROM productlines as pl
