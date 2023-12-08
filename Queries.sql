@@ -32,7 +32,7 @@ SELECT productline AS ProductLine, SUM(quantityinstock) AS Stock,
 ROUND((SUM(quantityinstock) / (SELECT SUM(quantityinstock) FROM products)) * 100,1) AS StockPercentage
 FROM products
 GROUP BY productline
-ORDER BY SUM(quantityinstock) DESC
+ORDER BY SUM(quantityinstock) DESC;
 
 (
 /*Haciendo un paréntesis y para demostrar el uso de JOIN, en caso de que Productline no fuere clave foránea en la tabla Products, podríamos haber utilizado 
@@ -71,7 +71,7 @@ agregación, cual es el  Mínimo, Máximo y Promedio.*/
 SELECT ROUND(AVG(buyprice),2) AS Average_Price, MIN(buyprice) AS Min_Price, MAX(buyprice) AS Max_Price
 FROM products;
 
-/*Tambien el precio más caro y el más barato.*/
+/*Tambien el precio de compra más caro y el más barato.*/
 
 SELECT productname AS Producto, buyprice AS Precio
 FROM products
@@ -83,8 +83,50 @@ FROM products
 ORDER BY buyprice ASC
 LIMIT 1;
 
-####### HACER MARGEN ENTRE PRECIO DE COMPRA Y DE VENTA - TABLA ORDERDETAILS VS PRODUCTS #####
+#TABLA ORDERDETAILS:
 
-#TABLA
+#PRECIO DE VENTA:
+
+/*Precio de venta más caro y el más barato.*/
+
+SELECT p.productname AS Producto, od.priceeach AS Precio
+FROM products AS p
+JOIN orderdetails AS od ON p.productcode = od.productcode
+ORDER BY buyprice DESC
+LIMIT 1;
+
+SELECT p.productname AS Producto, od.priceeach AS Precio
+FROM products AS p
+JOIN orderdetails AS od ON p.productcode = od.productcode
+ORDER BY buyprice ASC
+LIMIT 1;
+
+#TABLA ORDERDETAILS Y PRODUCTS:
+
+/* Utilizando pricEach de la tabla Orderdetails y buyPrice de Products, podemos analizar los 10 productos con menos/más margen
+de ganancia.*/  
+
+SELECT p.productcode AS Code, p.productline as Line, p.productname AS Product, p.buyprice AS Buy_Price, od.priceeach AS Sale_Price, (od.priceeach - p.buyprice) AS Margin, ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2) AS '%'
+FROM products AS p
+JOIN orderdetails as od ON p.productcode = od.productcode
+GROUP BY p.productcode, od.priceeach
+ORDER BY Margin DESC
+LIMIT 10
+
+SELECT p.productcode AS Code, p.productline as Line, p.productname AS Product, p.buyprice AS Buy_Price, od.priceeach AS Sale_Price, (od.priceeach - p.buyprice) AS Margin, ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2) AS '%'
+FROM products AS p
+JOIN orderdetails as od ON p.productcode = od.productcode
+GROUP BY p.productcode, od.priceeach
+ORDER BY Margin ASC
+LIMIT 10
+
+
+/*SELECT p.productline AS Line, AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) AS '%'
+FROM products AS p
+JOIN orderdetails AS od ON p.productcode = od.productcode
+GROUP BY p.productline
+ORDER BY AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) DESC*/
+
+
 
 
