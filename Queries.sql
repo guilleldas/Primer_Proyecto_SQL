@@ -2,17 +2,31 @@
 
 TABLA: PRODUCTLINES
 
-Comenzando por la tabla Productlines y creo que es bueno saber cuales son las lineas de productos y que cantidad de modelos existen dentro de cada una de ellas. 
+
+#TABLA PRODUCTS
+
+# LINEAS:
+  
+/*Comenzando por la tabla Product considero necesario analizar las lineas de productos y que cantidad de modelos existen dentro de cada una de ellas. 
 Con la siguiente query podemos ver que las lineas son Classic Cars, Vintage Cars, Motorcycles, Planes, Trucks and Buses, Ships y Trains. 
-Siendo Classic Cars la línea con más modelos y Trains la línea con menos modelos. Esto no significa que Classic Cars sea la más vendida sino que simplemente tiene más modelos. 
+Siendo Classic Cars la línea con más modelos y Trains la línea con menos modelos.*/ 
+
+#SERA LA LÍNEA CON MAS PRODUCTOS LA MAS VENDIDA?
 
 SELECT productline AS ProductLine, COUNT(productCode) AS Model_Qtty
 FROM products
 GROUP BY productline
-ORDER BY COUNT(productCode) DESC
+ORDER BY COUNT(productCode) DESC;
 
-En cuanto al stock, podemos obtener el stock existente por linea de productos y cual es su porcentaje sobre el stock total. En este caso Classic cars tiene un stock considerablemente mayor
-al de las demás líneas, por otro lado Trains es el que menor stock maneja. 
+#STOCK:
+
+/*En esta tabla, podemos ver el stock tal de modelos a escala mediante la siguiente query.*/
+
+SELECT SUM(quantityinstock)
+FROM products
+
+/*Siguiendo con el stock, podemos obtener el stock existente por línea de productos y cual es su porcentaje sobre el stock total. En este caso Classic cars tiene un 
+stock considerablemente superior al de las demás líneas, por otro lado Trains es el que menor stock maneja.*/
   
 SELECT productline AS ProductLine, SUM(quantityinstock) AS Stock, 
 ROUND((SUM(quantityinstock) / (SELECT SUM(quantityinstock) FROM products)) * 100,1) AS StockPercentage
@@ -20,8 +34,9 @@ FROM products
 GROUP BY productline
 ORDER BY SUM(quantityinstock) DESC
 
-Haciendo un paréntesis y para demostrar el uso de JOIN, en caso de que Productline no fuere clave foránea en products, deberíamos haber hecho las siguientes consultas para obtener el mismo resultado
-que en las queries de arriba.
+(
+/*Haciendo un paréntesis y para demostrar el uso de JOIN, en caso de que Productline no fuere clave foránea en la tabla Products, podríamos haber utilizado 
+las siguientes consultas para obtener el mismo resultado que en las queries de arriba.
   
 SELECT pl.productline AS ProductLine, COUNT(pr.productCode) AS Model_Qtty
 FROM productlines as pl
@@ -35,45 +50,41 @@ FROM productlines as pl
 JOIN products as pr ON pr.productline = pl.productline
 GROUP BY pl.productline
 ORDER BY SUM(pr.quantityinstock) DESC*/
-
 )
 
 
-#VER LA STOCK TOTAL PARA LUEGO SACAR CONCLUSIONES
+/*Otro punto a analizar en la tabla Products es la cantidad de productos/modelos que existen por escala. 
+La escala 1:18 es la que más modelos tiene, mientras que las escalas 1:72 y 10:50 son las que menos.*/
 
-/*SELECT SUM(quantityinstock)
-FROM products*/
+# SERA LA ESCALA CON MAS PRODUCTOS LA MAS VENDIDA?
 
-#TABLA PRODUCTS
-
-# Similar a la query anterior, pero en este caso trabajando con la tabla Products, creo que es bueno
-# saber la cantidad de productos que existen por escala. La escala 1:18 es la que más modelos tiene,
-# mientras que las escalas 1:72 y 10:50 son las que menos.
-
-# MÁS ADELANTE SE PUDE ANALIZAR SI EXISTE UNA RELACION ENTRE LA CANTIDAD DE MODELOS DE CADA ESCALA 
-# Y LAS VENTAS.
-
-/*SELECT productscale AS Scale, COUNT(productcode) AS Model_Qtty
+SELECT productscale AS Scale, COUNT(productcode) AS Model_Qtty
 FROM products
 GROUP BY productscale
-ORDER BY COUNT(productscale) DESC*/
+ORDER BY COUNT(productscale) DESC;
 
-# CON LA SIGUIENTE QUERY PODEMOS ANALIZAR, DE TODOS LOS PRODUCTOS, CUAL ES EL PROMEDIO, CUAL ES
-# EL MAS CARO Y CUAL ES EL MAS BARATO.
+# PRECIO DE COMPRA:
+  
+/* Aprovechando que la tabla contiene información sobre el precio de compra de los productos, podemos analizar con funciones de
+agregación, cual es el  Mínimo, Máximo y Promedio.*/
 
-/*SELECT ROUND(AVG(buyprice),2) AS Average_Price, MIN(buyprice) AS Min_Price, MAX(buyprice) AS Max_Price
-FROM products*/
+SELECT ROUND(AVG(buyprice),2) AS Average_Price, MIN(buyprice) AS Min_Price, MAX(buyprice) AS Max_Price
+FROM products;
 
-#BUSCANDO CUAL ES EL PRODUCTO MAS CARO
+/*Tambien el precio más caro y el más barato.*/
 
-/*SELECT productname AS Producto, buyprice AS Precio
+SELECT productname AS Producto, buyprice AS Precio
 FROM products
 ORDER BY buyprice DESC
-LIMIT 1*/
+LIMIT 1;
 
-#BUSCANDO CUAL ES EL PRODUCTO MAS BARATO
-
-/*SELECT productname AS Producto, buyprice AS Precio
+SELECT productname AS Producto, buyprice AS Precio
 FROM products
 ORDER BY buyprice ASC
-LIMIT 1*/
+LIMIT 1;
+
+####### HACER MARGEN ENTRE PRECIO DE COMPRA Y DE VENTA - TABLA ORDERDETAILS VS PRODUCTS #####
+
+#TABLA
+
+
