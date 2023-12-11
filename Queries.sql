@@ -98,7 +98,7 @@ GROUP BY p.productcode, od.priceeach
 ORDER BY Margin ASC
 LIMIT 10;
 
-/*Siguiendo con las mismas dos tablas, podemos ver los porcentajes de ganancia en promedio, por linea de producto.*/
+/*Siguiendo con las mismas dos tablas, podemos ver el margen de ganancia promedio, por linea de producto.*/
 
 SELECT p.productline AS Line, AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) AS '%'
 FROM products AS p
