@@ -1,6 +1,6 @@
 #Las siguientes queries fueron pensadas para extraer información valiosa e interesante del dataset.
 
-# LINEAS:
+#LINEAS:
   
 /*Comenzando por la tabla Product considero necesario analizar las lineas de productos y que cantidad de modelos existen dentro de cada una de ellas. 
 Con la siguiente query podemos ver que las lineas son Classic Cars, Vintage Cars, Motorcycles, Planes, Trucks and Buses, Ships y Trains. 
@@ -43,7 +43,7 @@ FROM products
 GROUP BY productscale
 ORDER BY COUNT(productscale) DESC;
 
-# PRECIO DE COMPRA:
+#PRECIO DE COMPRA:
   
 /* Aprovechando que la tabla contiene información sobre el precio de compra de los productos, podemos analizar con funciones de
 agregación, cual es el  Mínimo, Máximo y Promedio.*/
@@ -63,8 +63,6 @@ FROM products
 ORDER BY buyprice ASC
 LIMIT 1;
 
-#TABLA ORDERDETAILS:
-
 #PRECIO DE VENTA:
 
 /*Precio de venta más caro y más barato.*/
@@ -81,7 +79,7 @@ JOIN orderdetails AS od ON p.productcode = od.productcode
 ORDER BY buyprice ASC
 LIMIT 1;
 
-#TABLA ORDERDETAILS Y PRODUCTS:
+#MARGEN DE GANANCIA:
 
 /* Utilizando priceEach de la tabla Orderdetails y buyPrice de Products, podemos analizar los 10 productos con menos/más margen
 de ganancia.*/  
@@ -107,6 +105,8 @@ FROM products AS p
 JOIN orderdetails AS od ON p.productcode = od.productcode
 GROUP BY p.productline
 ORDER BY AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) DESC;
+
+#VENTAS:
 
 /* Con el uso de las tablas Orderdetails, Orders y Products, pude analizar cuales fueron los productos más vendidos en distintos períodos de tiempo.
 En 2003, 2004, 2005 y en el período 2003-2005. Tambien se listan las columnas productline y product code para darle contexto al nombre del producto.*/
@@ -158,6 +158,8 @@ GROUP BY od.productcode
 ORDER BY SUM(od.quantityordered) ASC
 LIMIT 10;
 
+ORDENES:
+
 /* Dentro de la tabla Orderdetails, podemos analizar cuales fueron las ordenes de mayor monto.*/
 
 SELECT ordernumber AS Order_Number, SUM((priceeach * quantityordered)) AS Total
@@ -187,7 +189,7 @@ WHERE od.ordernumber = '10165' OR od.ordernumber = '10287' OR od.ordernumber = '
 GROUP BY od.ordernumber, od.productcode, p.productname, od.priceeach, od.quantityordered
 ORDER BY od.ordernumber, Total DESC;
 
-### TABLA CUSTOMERS Y PAYMENTS:
+#PAGOS:
 
 /* En cualquier empresa es importante saber quienes son los clientes pendiente de pago, es por eso que realizo la siguiente query para saber que cliente no pago, 
 o bien, si el pago no fue registrado en el sistema.*/
@@ -196,9 +198,9 @@ SELECT c.customerNumber AS Customer_Number, c.customerName AS Company,
 c.contactLastName AS Contact_Name, c.contactFirstName AS Contact_Surname
 FROM customers AS c
 LEFT JOIN payments AS p ON c.customerNumber = p.customerNumber
-WHERE p.checkNumber IS NULL
+WHERE p.checkNumber IS NULL;
 
-TABLA CUSTOMERS 
+#CREDITO:
 
 /*Dentro de la tabla customers, se puede analizar el limite de credito de cada uno. Para esto utilizo CASE WHEN, donde creo una columna para saber si su limite
 de credito es Alto, Medio o Bajo. Excluyo aquellos clientes que su limite de crédito sea = 0.*/
@@ -211,7 +213,7 @@ ELSE 'Bajo'
 END AS Categoria_Credito
 FROM customers
 WHERE creditlimit <> 0.00
-ORDER BY customername
+ORDER BY customername;
 
 
 
