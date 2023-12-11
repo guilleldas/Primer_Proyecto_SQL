@@ -1,9 +1,7 @@
 Creo este archivo para mostrar tanto las consultas utilizadas, como los resultados devueltos por MySQL. Se utiliza DBeaver para obtener los resultados de las 
 consultas en forma de texto y poder implementarlos en el Markdown.
 
-/*Comenzando por la tabla Product considero necesario analizar las lineas de productos y que cantidad de modelos existen dentro de cada una de ellas. 
-Con la siguiente query podemos ver que las lineas son Classic Cars, Vintage Cars, Motorcycles, Planes, Trucks and Buses, Ships y Trains. 
-Siendo Classic Cars la línea con más modelos y Trains la línea con menos modelos.*/ 
+### Líneas de producto y cantidad de productos en cada una de ellas
 
 <details>
 <summary>Ver consulta</summary>
@@ -16,8 +14,7 @@ ORDER BY COUNT(productCode) DESC;
 ```
 </details>
 
-<details>
-<summary>Ver resultado</summary>
+Resultado:
 
 | ProductLine      | Model_Qtty |
 |-------------------|------------|
@@ -29,11 +26,8 @@ ORDER BY COUNT(productCode) DESC;
 | Ships             | 9          |
 | Trains            | 3          |
 
-</details>
 
-#STOCK:
-
-/*En esta tabla, podemos ver el stock tal de modelos a escala mediante la siguiente query.*/
+### Stock total
 
 <details>
 <summary>Ver consulta</summary>
@@ -44,17 +38,14 @@ FROM products
 ```
 </details>
 
-<details>
-<summary>Ver resultado</summary>
-  
+Resultado:
+
 | Total_Stock |
 | -------------------- |
 | 555131               |
-  
-</details>
 
 
-/*Siguiendo con el stock, podemos obtener el stock existente por línea de productos y cual es su porcentaje sobre el stock total. En este caso Classic cars tiene un stock considerablemente superior al de las demás líneas, por otro lado Trains es el que menor stock maneja.*/
+### Stock por línea de producto y porcentaje sobre stock total
 
 <details>
 <summary>Ver consulta</summary>
@@ -68,7 +59,9 @@ ORDER BY SUM(quantityinstock) DESC;
 ```
 </details>
 
-/*La siguiente query la planteo para analizar, dentro de la linea 'Classic Cars', cual es la cantidad en stock de coches marca Ferrari y que cantidad es marca Renault.*/
+Resultado:
+
+### Dentro de la línea 'Classic Cars', determino cual es el stock de vehículos de marca Ferrari o Renault
 
 <details>
 <summary>Ver consulta</summary>
@@ -83,8 +76,9 @@ WHERE productline = 'classic cars';
 ```
 </details>
 
-/*Otro punto a analizar en la tabla Products es la cantidad de productos/modelos que existen por escala. 
-La escala 1:18 es la que más modelos tiene, mientras que las escalas 1:72 y 10:50 son las que menos.*/
+Resultado:
+
+### Cantidad de modelos por tamaño
 
 <details>
 <summary>Ver consulta</summary>
@@ -98,11 +92,9 @@ ORDER BY COUNT(productscale) DESC;
 ```
 </details>
 
-
-#PRECIO DE COMPRA:
+Resultado:
   
-/* Aprovechando que la tabla contiene información sobre el precio de compra de los productos, podemos analizar con funciones de
-agregación, cual es el  Mínimo, Máximo y Promedio.*/
+### Mínimo, máximo y promedio del precio de compra
 
 <details>
 <summary>Ver consulta</summary>
@@ -113,8 +105,9 @@ FROM products;
 ```
 </details>
 
+Resultado:
 
-/*Tambien el precio de compra más caro y el más barato.*/
+### Precio de compra más caro y más barato
 
 <details>
 <summary>Ver consulta</summary>
@@ -126,6 +119,8 @@ ORDER BY buyprice DESC
 LIMIT 1;
 ```
 </details>
+
+Resultado:
 
 <details>
 <summary>Ver consulta</summary>
@@ -139,9 +134,9 @@ LIMIT 1;
 ```
 </details>
 
-#PRECIO DE VENTA:
+Resultado:
 
-/*Precio de venta más caro y más barato.*/
+### Precio de venta más caro y más barato
 
 <details>
 <summary>Ver consulta</summary>
@@ -155,6 +150,8 @@ LIMIT 1;
 ```
 </details>
 
+Resultado:
+
 <details>
 <summary>Ver consulta</summary>
 
@@ -167,11 +164,9 @@ LIMIT 1;
 ```
 </details>
 
+Resultado:
 
-#MARGEN DE GANANCIA:
-
-/* Utilizando priceEach de la tabla Orderdetails y buyPrice de Products, podemos analizar los 10 productos con menos/más margen
-de ganancia.*/  
+### Productos con más y menos margen de ganancia 
 
 <details>
 <summary>Ver consulta</summary>
@@ -186,6 +181,8 @@ LIMIT 10;
 ```
 </details>
 
+Resultado:
+
 <details>
 <summary>Ver consulta</summary>
 
@@ -199,7 +196,9 @@ LIMIT 10;
 ```
 </details>
 
-/*Siguiendo con las mismas dos tablas, podemos ver el margen de ganancia promedio, por linea de producto.*/
+Resultado:
+
+### Margen de ganancia promedio por línea de producto
 
 <details>
 <summary>Ver consulta</summary>
@@ -213,10 +212,9 @@ ORDER BY AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) DESC;
 ```
 </details>
 
-#VENTAS:
+Resultado:
 
-/* Con el uso de las tablas Orderdetails, Orders y Products, pude analizar cuales fueron los productos más vendidos en distintos períodos de tiempo.
-En 2003, 2004, 2005 y en el período 2003-2005. Tambien se listan las columnas productline y product code para darle contexto al nombre del producto.*/
+### Productos más vendidos en 2003, 2004, 2005 y período 2003-2005
 
 <details>
 <summary>Ver consulta</summary>
@@ -233,6 +231,8 @@ LIMIT 10;
 ```
 </details>
 
+Resultado:
+
 <details>
 <summary>Ver consulta</summary>
 
@@ -247,6 +247,8 @@ ORDER BY SUM(od.quantityordered) DESC
 LIMIT 10;
 ```
 </details>
+
+Resultado:
 
 <details>
 <summary>Ver consulta</summary>
@@ -264,6 +266,8 @@ LIMIT 10;
 ```
 </details>
 
+Resultado:
+
 <details>
 <summary>Ver consulta</summary>
 
@@ -279,7 +283,9 @@ LIMIT 10;
 ```
 </details>
 
-/*La siguiente query es realizada para, al contrario de la anterior, devuelve cuales son los productos menos vendidos en el período 2003-2005*/
+Resultado:
+
+### Productos menos vendidos período 2003-2005
 
 <details>
 <summary>Ver consulta</summary>
@@ -296,9 +302,9 @@ LIMIT 10;
 ```
 </details>
 
-ORDENES:
+Resultado:
 
-/* Dentro de la tabla Orderdetails, podemos analizar cuales fueron las ordenes de mayor monto.*/
+### 3 ordenes de mayor monto
 
 <details>
 <summary>Ver consulta</summary>
@@ -312,7 +318,9 @@ LIMIT 3;
 ```
 </details>
 
-/* Realizando dos JOINs con las tablas orders y customers, podemos ver quien es el cliente en cada una de las facturas filtradas anteriormente*/
+Resultado:
+
+### Busco cliente de las 3 facturas de mayor monto
 <details>
 <summary>Ver consulta</summary>
 
@@ -327,8 +335,9 @@ LIMIT 3;
 ```
 </details>
 
-/* Sabiendo cual fueron las facturas mas caras, realizo la siguiente query para saber en detalle como estan compuestas las mismas. Es decir, su order number, junto con
-cada uno de los productos incluidos en esa orden, su precio, cantidad y total.*/
+Resultado:
+
+### Busco detalles e información de cada una de las facturas de mayor monto
 
 <details>
 <summary>Ver consulta</summary>
@@ -344,11 +353,9 @@ ORDER BY od.ordernumber, Total DESC;
 ```
 </details>
 
+Resultado:
 
-#PAGOS:
-
-/* En cualquier empresa es importante saber quienes son los clientes pendiente de pago, es por eso que realizo la siguiente query para saber que cliente no pago, 
-o bien, si el pago no fue registrado en el sistema.*/
+### Clientes deudores o pagos no registrados
 
 <details>
 <summary>Ver consulta</summary>
@@ -362,10 +369,9 @@ WHERE p.checkNumber IS NULL;
 ```
 </details>
 
-#CREDITO:
+Resultado:
 
-/*Dentro de la tabla customers, se puede analizar el limite de credito de cada uno. Para esto utilizo CASE WHEN, donde creo una columna para saber si su limite
-de credito es Alto, Medio o Bajo. Excluyo aquellos clientes que su limite de crédito sea = 0.*/
+### Análisis y categorización de créditos
 
 <details>
 <summary>Ver consulta</summary>
@@ -379,6 +385,8 @@ ELSE 'Bajo'
 END AS Categoria_Credito
 FROM customers
 WHERE creditlimit <> 0.00
+ORDER BY customername;
 ```
 </details>
-ORDER BY customername;
+
+Resultado:
