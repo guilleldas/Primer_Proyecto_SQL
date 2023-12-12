@@ -1,10 +1,11 @@
-Creo este archivo para mostrar tanto las consultas utilizadas, como los resultados devueltos por MySQL. Se utiliza DBeaver para obtener los resultados de las 
-consultas en forma de texto y poder implementarlos en el Markdown.
+# Queries y resultados
+
+##### Creo este archivo para mostrar tanto las consultas utilizadas, como los resultados devueltos por MySQL. Se utiliza DBeaver para obtener los resultados de las consultas en forma de texto y poder implementarlos en el Markdown.
+
+
 
 ### Líneas de producto y cantidad de productos en cada una de ellas
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql
 SELECT productline AS ProductLine, COUNT(productCode) AS Model_Qtty
@@ -12,9 +13,10 @@ FROM products
 GROUP BY productline
 ORDER BY COUNT(productCode) DESC;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+
 
 | ProductLine      | Model_Qtty |
 |-------------------|------------|
@@ -26,29 +28,26 @@ Resultado:
 | Ships             | 9          |
 | Trains            | 3          |
 
+</details>
 
 ### Stock total
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql
 SELECT SUM(quantityinstock) as Total_Stock
 FROM products
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 | Total_Stock |
 | -------------------- |
 | 555131               |
 
+</details>
 
 ### Stock por línea de producto y porcentaje sobre stock total
-
-<details>
-<summary>Ver consulta</summary>
 
 ```sql
 SELECT productline AS ProductLine, SUM(quantityinstock) AS Stock, 
@@ -57,9 +56,9 @@ FROM products
 GROUP BY productline
 ORDER BY SUM(quantityinstock) DESC;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 | ProductLine      | Stock  | StockPercentage |
 | ----------------- | ------ | --------------- |
@@ -71,10 +70,9 @@ Resultado:
 | Ships             | 26833  | 4.8             |
 | Trains            | 16696  | 3.0             |
 
-### Dentro de la línea 'Classic Cars', determino cual es el stock de vehículos de marca Ferrari o Renault
+</details>
 
-<details>
-<summary>Ver consulta</summary>
+### Dentro de la línea 'Classic Cars', determino cual es el stock de vehículos de marca Ferrari o Renault
 
 ```sql
 SELECT 
@@ -84,18 +82,17 @@ SUM(quantityinstock) AS Total_Stock
 FROM products
 WHERE productline = 'classic cars';
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 | Ferrari_Stock | Renault_Stock | Total_Stock |
 | -------------- | -------------- | ----------- |
 |          11966 |         15300 |      219183 |
-        
-### Cantidad de modelos por tamaño
 
-<details>
-<summary>Ver consulta</summary>
+</details>
+
+### Cantidad de modelos por tamaño
 
 ```sql
 
@@ -104,41 +101,40 @@ FROM products
 GROUP BY productscale
 ORDER BY COUNT(productscale) DESC;
 ```
-</details>
-
-Resultado:
-| Scale | Model_Qtty |
-|-------|------------|
-| 1:18  |         42 |
-| 1:24  |         27 |
-| 1:700 |         10 |
-| 1:12  |          9 |
-| 1:32  |          8 |
-| 1:10  |          6 |
-| 1:72  |          4 |
-| 1:50  |          4 |
-
-### Mínimo, máximo y promedio del precio de compra
 
 <details>
-<summary>Ver consulta</summary>
+<summary>Ver resultado</summary>
+
+|Scale|Model_Qtty|
+|-----|----------|
+|1:18|42|
+|1:24|27|
+|1:700|10|
+|1:12|9|
+|1:32|8|
+|1:10|6|
+|1:72|4|
+|1:50|4|
+
+</details>
+
+### Mínimo, máximo y promedio del precio de compra
 
 ```sql
 SELECT ROUND(AVG(buyprice),2) AS Average_Price, MIN(buyprice) AS Min_Price, MAX(buyprice) AS Max_Price
 FROM products;
 ```
-</details>
 
-Resultado:
+
+<details>
+<summary>Ver resultado</summary>
 
 | Average_Price | Min_Price | Max_Price |
 |---------------|-----------|-----------|
 |         54.40 |     15.91 |    103.42 |
 
 ### Precio de compra más caro y más barato
-
-<details>
-<summary>Ver consulta</summary>
+</details>
 
 ```sql
 SELECT productname AS Producto, buyprice AS Precio
@@ -146,16 +142,15 @@ FROM products
 ORDER BY buyprice DESC
 LIMIT 1;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 | Producto                  | Precio |
 |---------------------------|--------|
 | 1962 LanciaA Delta 16V    | 103.42 |
 
-<details>
-<summary>Ver consulta</summary>
+</details>
 
 ```sql
 
@@ -164,17 +159,17 @@ FROM products
 ORDER BY buyprice ASC
 LIMIT 1;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+
 | Producto                                 | Precio |
 |------------------------------------------|--------|
 | 1958 Chevy Corvette Limited Edition      | 15.91  |
 
-### Precio de venta más caro y más barato
+</details>
 
-<details>
-<summary>Ver consulta</summary>
+### Precio de venta más caro y más barato
 
 ```sql
 SELECT p.productname AS Producto, od.priceeach AS Precio
@@ -183,16 +178,15 @@ JOIN orderdetails AS od ON p.productcode = od.productcode
 ORDER BY buyprice DESC
 LIMIT 1;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Producto|Precio|
 |--------|------|
 |1962 LanciaA Delta 16V|119.67|
+</details>
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql
 SELECT p.productname AS Producto, od.priceeach AS Precio
@@ -203,15 +197,16 @@ LIMIT 1;
 ```
 </details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+
 |Producto|Precio|
 |--------|------|
 |1958 Chevy Corvette Limited Edition|30.41|
 
-### Productos con más y menos margen de ganancia 
+</details>
 
-<details>
-<summary>Ver consulta</summary>
+### Productos con más y menos margen de ganancia 
 
 ```sql
 SELECT p.productcode AS Code, p.productline as Line, p.productname AS Product, p.buyprice AS Buy_Price, od.priceeach AS Sale_Price, (od.priceeach - p.buyprice) AS Margin, ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2) AS '%'
@@ -221,9 +216,10 @@ GROUP BY p.productcode, od.priceeach
 ORDER BY Margin DESC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+        
 |Code|Line|Product|Buy_Price|Sale_Price|Margin|%|
 |----|----|-------|---------|----------|------|-|
 |S10_1949|Classic Cars|1952 Alpine Renault 1300|98.58|214.30|115.72|117.39|
@@ -236,9 +232,8 @@ Resultado:
 |S10_1949|Classic Cars|1952 Alpine Renault 1300|98.58|205.73|107.15|108.69|
 |S12_1108|Classic Cars|2001 Ferrari Enzo|95.59|201.57|105.98|110.87|
 |S10_1949|Classic Cars|1952 Alpine Renault 1300|98.58|203.59|105.01|106.52|
+</details>
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql
 SELECT p.productcode AS Code, p.productline as Line, p.productname AS Product, p.buyprice AS Buy_Price, od.priceeach AS Sale_Price, (od.priceeach - p.buyprice) AS Margin, ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2) AS '%'
@@ -248,9 +243,10 @@ GROUP BY p.productcode, od.priceeach
 ORDER BY Margin ASC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+        
 |Code|Line|Product|Buy_Price|Sale_Price|Margin|%|
 |----|----|-------|---------|----------|------|-|
 |S24_1937|Vintage Cars|1939 Chevrolet Deluxe Coupe|22.57|26.55|3.98|17.63|
@@ -264,10 +260,9 @@ Resultado:
 |S24_1937|Vintage Cars|1939 Chevrolet Deluxe Coupe|22.57|29.87|7.30|32.34|
 |S72_1253|Planes|Boeing X-32A JSF|32.77|40.22|7.45|22.73|
 
-### Margen de ganancia promedio por línea de producto
+</details>
 
-<details>
-<summary>Ver consulta</summary>
+### Margen de ganancia promedio por línea de producto
 
 ```sql
 SELECT p.productline AS Line, AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) AS '%'
@@ -276,9 +271,10 @@ JOIN orderdetails AS od ON p.productcode = od.productcode
 GROUP BY p.productline
 ORDER BY AVG(ROUND(((od.priceeach - p.buyprice)/p.buyprice)*100,2)) DESC;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+        
 |Line|%|
 |----|-|
 |Motorcycles|73.461365|
@@ -289,10 +285,10 @@ Resultado:
 |Planes|64.529911|
 |Trains|64.112963|
 
+</details>
+
 ### Productos más vendidos en 2003, 2004, 2005 y período 2003-2005
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT p.productname AS Product, p.productline AS Line, od.productcode AS Product_Code, SUM(od.quantityordered) AS Quantity_Ordered
@@ -304,9 +300,9 @@ GROUP BY od.productcode
 ORDER BY SUM(od.quantityordered) DESC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Product|Line|Product_Code|Quantity_Ordered|
 |-------|----|------------|----------------|
@@ -321,8 +317,8 @@ Resultado:
 |1996 Peterbilt 379 Stake Bed with Outrigger|Trucks and Buses|S32_3522|373|
 |1950's Chicago Surface Lines Streetcar|Trains|S32_3207|372|
 
-<details>
-<summary>Ver consulta</summary>
+</details>
+
 
 ```sql
 SELECT p.productname AS Product, p.productline AS Line, od.productcode AS Product_Code, SUM(od.quantityordered) AS Quantity_Ordered
@@ -334,9 +330,11 @@ GROUP BY od.productcode
 ORDER BY SUM(od.quantityordered) DESC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+
+<details>
+<summary>Ver resultado</summary>
+        
 |Product|Line|Product_Code|Quantity_Ordered|
 |-------|----|------------|----------------|
 |1992 Ferrari 360 Spider red|Classic Cars|S18_3232|789|
@@ -349,9 +347,7 @@ Resultado:
 |American Airlines: MD-11S|Planes|S700_4002|531|
 |1969 Harley Davidson Ultimate Chopper|Motorcycles|S10_1678|530|
 |1937 Lincoln Berline|Vintage Cars|S18_1342|524|
-
-<details>
-<summary>Ver consulta</summary>
+</details>
 
 ```sql
 SELECT p.productname AS Product, p.productline AS Line, od.productcode AS Product_Code, SUM(od.quantityordered) AS Quantity_Ordered
@@ -364,9 +360,9 @@ ORDER BY SUM(od.quantityordered) DESC
 LIMIT 10;
 
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Product|Line|Product_Code|Quantity_Ordered|
 |-------|----|------------|----------------|
@@ -380,9 +376,7 @@ Resultado:
 |2002 Suzuki XREO|Motorcycles|S12_2823|231|
 |1996 Moto Guzzi 1100i|Motorcycles|S10_2016|230|
 |1941 Chevrolet Special Deluxe Cabriolet|Vintage Cars|S18_3856|226|
-
-<details>
-<summary>Ver consulta</summary>
+</details>
 
 ```sql  
 SELECT p.productname AS Product, p.productline AS Line, od.productcode AS Product_Code, SUM(od.quantityordered) AS Quantity_Ordered
@@ -394,9 +388,10 @@ GROUP BY od.productcode
 ORDER BY SUM(od.quantityordered) DESC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
+
 |Product|Line|Product_Code|Quantity_Ordered|
 |-------|----|------------|----------------|
 |1992 Ferrari 360 Spider red|Classic Cars|S18_3232|1808|
@@ -409,11 +404,9 @@ Resultado:
 |1957 Chevy Pickup|Trucks and Buses|S12_4473|1056|
 |1964 Mercedes Tour Bus|Trucks and Buses|S18_2319|1053|
 |1956 Porsche 356A Coupe|Classic Cars|S24_3856|1052|
+</details>
 
 ### Productos menos vendidos período 2003-2005
-
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT p.productname AS Product, p.productline AS Line, od.productcode AS Product_Code, SUM(od.quantityordered) AS Quantity_Ordered
@@ -425,9 +418,9 @@ GROUP BY od.productcode
 ORDER BY SUM(od.quantityordered) ASC
 LIMIT 10;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Product|Line|Product_Code|Quantity_Ordered|
 |-------|----|------------|----------------|
@@ -441,11 +434,10 @@ Resultado:
 |1969 Chevrolet Camaro Z28|Classic Cars|S24_3191|870|
 |1952 Citroen-15CV|Classic Cars|S24_2887|873|
 |1928 Mercedes-Benz SSK|Vintage Cars|S18_2795|880|
+</details>
 
 ### 3 ordenes de mayor monto
 
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT ordernumber AS Order_Number, SUM((priceeach * quantityordered)) AS Total
@@ -454,9 +446,9 @@ GROUP BY ordernumber
 ORDER BY Total DESC
 LIMIT 3;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Order_Number|Total|
 |------------|-----|
@@ -464,9 +456,9 @@ Resultado:
 |10287|61402.00|
 |10310|61234.67|
 
+</details>
+
 ### Busco cliente de las 3 facturas de mayor monto
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT od.ordernumber AS Order_Number, SUM((od.priceeach * od.quantityordered)) AS Total, c.customername as Customer_Name
@@ -477,19 +469,19 @@ GROUP BY od.ordernumber
 ORDER BY Total DESC
 LIMIT 3;
 ```
-</details>
 
-Resultado:
+
+<details>
+<summary>Ver resultado</summary>
+        
 |Order_Number|Total|Customer_Name|
 |------------|-----|-------------|
 |10165|67392.85|Dragon Souveniers, Ltd.|
 |10287|61402.00|Vida Sport, Ltd|
 |10310|61234.67|Toms Spezialitäten, Ltd|
+</details>
 
 ### Busco detalles e información de cada una de las facturas de mayor monto
-
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT od.ordernumber AS Order_Number, od.productcode AS Product_Code, p.productname AS Product, od.priceeach AS Price, od.quantityordered AS Quantity, SUM((od.priceeach * od.quantityordered)) AS Total
@@ -500,9 +492,10 @@ WHERE od.ordernumber = '10165' OR od.ordernumber = '10287' OR od.ordernumber = '
 GROUP BY od.ordernumber, od.productcode, p.productname, od.priceeach, od.quantityordered
 ORDER BY od.ordernumber, Total DESC;
 ```
-</details>
 
-Resultado:
+
+<details>
+<summary>Ver resultado</summary>
 
 |Order_Number|Product_Code|Product|Price|Quantity|Total|
 |------------|------------|-------|-----|--------|-----|
@@ -558,11 +551,9 @@ Resultado:
 |10310|S32_2206|1982 Ducati 996 R|38.62|36|1390.32|
 |10310|S18_1889|1948 Porsche 356-A Roadster|66.99|20|1339.80|
 |10310|S24_2972|1982 Lamborghini Diablo|33.23|33|1096.59|
+</details>
 
 ### Clientes deudores o pagos no registrados
-
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT c.customerNumber AS Customer_Number, c.customerName AS Company,
@@ -571,9 +562,10 @@ FROM customers AS c
 LEFT JOIN payments AS p ON c.customerNumber = p.customerNumber
 WHERE p.checkNumber IS NULL;
 ```
-</details>
 
-Resultado:
+
+<details>
+<summary>Ver resultado</summary>
 
 |Customer_Number|Company|Contact_Name|Contact_Surname|
 |---------------|-------|------------|---------------|
@@ -601,11 +593,9 @@ Resultado:
 |477|Mit Vergnügen & Co.|Moos|Hanna |
 |480|Kremlin Collectables, Co.|Semenov|Alexander |
 |481|Raanan Stores, Inc|Altagar,G M|Raanan|
+</details>
 
 ### Análisis y categorización de créditos
-
-<details>
-<summary>Ver consulta</summary>
 
 ```sql  
 SELECT customername AS Customer_Name, creditlimit AS Credit_Limit,
@@ -618,9 +608,9 @@ FROM customers
 WHERE creditlimit <> 0.00
 ORDER BY customername;
 ```
-</details>
 
-Resultado:
+<details>
+<summary>Ver resultado</summary>
 
 |Customer_Name|Credit_Limit|Categoria_Credito|
 |-------------|------------|-----------------|
@@ -722,4 +712,4 @@ Resultado:
 |Vitachrome Inc.|76400.00|Alto|
 |Volvo Model Replicas, Co|53100.00|Alto|
 |West Coast Collectables Co.|55400.00|Alto|
-
+</details>
