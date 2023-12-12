@@ -1,6 +1,6 @@
 # Queries y resultados
 
-##### Creo este archivo para mostrar tanto las consultas utilizadas, como los resultados devueltos por MySQL. Se utiliza DBeaver para obtener los resultados de las consultas en forma de texto y poder implementarlos en el Markdown.
+##### Creo este archivo para mostrar los resultados obtenidos en cada consulta. Se utiliza DBeaver para obtener los resultados de las consultas en forma de texto y poder implementarlos en el Markdown.
 
 
 
