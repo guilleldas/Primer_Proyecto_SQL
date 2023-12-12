@@ -1,6 +1,6 @@
 # CLASSICMODELS - DATA ANALYSIS
 
-El siguiente proyecto es realizado por Guillermo Lodeiro, alumno del máster en Big Data and Data Science de la Universidad Complutense de Madrid. El objetivo es poner en práctica los conocimientos adquiridos en la clase de Bases de Datos SQL, analizando el diagrama de Entidad Relación y realizando queries que me permitan obtener información valiosa del dataset. Para este proyecto utilizare el lenguaje SQL y el gestor de base de datos MySQL y DBeaver.
+El siguiente proyecto es realizado por Guillermo Lodeiro, alumno del máster en Big Data and Data Science de la Universidad Complutense de Madrid. El objetivo es poner en práctica los conocimientos adquiridos en la clase de Bases de Datos SQL, analizando el diagrama de Entidad Relación y realizando queries que me permitan obtener información valiosa del dataset. Para este proyecto utilizare el lenguaje SQL, el gestor de base de datos MySQL y DBeaver.
 
 Autor: Guillermo Lodeiro
 
