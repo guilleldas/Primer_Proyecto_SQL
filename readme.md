@@ -4,6 +4,8 @@ El siguiente proyecto es realizado por Guillermo Lodeiro, alumno del máster en 
 
 Autor: Guillermo Lodeiro
 
+Docente: Juan Fernando Sánchez
+
 Centro de estudios: Universidad Complutense de Madrid
 
 
